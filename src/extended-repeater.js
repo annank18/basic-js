@@ -15,10 +15,49 @@ const { NotImplementedError } = require('../extensions/index.js');
  * => 'STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS'
  *
  */
-function repeater(/* str, options */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
-}
+function repeater(str, options) {
+    let arr = [];
+    let i = 0
+    if (Number.isInteger(options.additionRepeatTimes)) {
+      while (i < options.additionRepeatTimes) {
+        if (options.addition === null || options.addition === false) {
+          arr.push(String(options.addition))
+        } else {
+          arr.push(options.addition)
+        }
+        i++
+      }
+  
+    } else {
+      if (options.addition === null || options.addition === false) {
+        arr.push(String(options.addition))
+      } else {
+        arr.push(options.addition)
+      }
+    }
+    let string = '';
+    if(options.additionSeparator){
+      string = `${String(str)}${arr.join(options.additionSeparator)}`
+     } else {
+      string = `${String(str)}${arr.join('|')}`;}
+    let arr1 = [];
+    let j = 0;
+    if (Number.isInteger(options.repeatTimes)) {
+      while (j < options.repeatTimes) {
+        arr1.push(string)
+        j++
+      }
+    } else {
+      arr1.push(string)
+    }
+    let result = '';
+    if (options.separator) {
+      result = arr1.join(options.separator)
+     } else {
+        result = arr1.join('+');}
+    return result
+  } 
+ // throw new NotImplementedError('Not implemented');
 
 module.exports = {
   repeater
