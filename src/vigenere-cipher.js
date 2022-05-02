@@ -20,22 +20,22 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 
- class VigenereCipheringMachine {
+class VigenereCipheringMachine {
   constructor(directly = true) {
     this.directly = directly;
   }
 
-  encrypt(message, word) {
+  encrypt(str, word) {
     if (arguments.length !== 2) throw new Error(`Incorrect arguments!`);
     if(typeof arguments[0] !== 'string' || typeof arguments[1] !== 'string') throw new Error(`Incorrect arguments!`);
-    message = message.toUpperCase().split("");
-    while (word.length < message.length) {
+    str = str.toUpperCase().split("");
+    while (word.length < str.length) {
       word += word;
     }
     word = word.toUpperCase().split("");
     let newStr = "";
     let index = 0;
-    for (let i = 0; i < message.length; i++) {
+    for (let i = 0; i < str.length; i++) {
       let numStr = String(str[i]);
 
       if (numStr.charCodeAt() >= 65 && numStr.charCodeAt() <= 90) {
@@ -60,18 +60,18 @@ const { NotImplementedError } = require('../extensions/index.js');
     }
     
   }
-  decrypt(message, word) {
+  decrypt(str, word) {
     if (arguments.length !== 2) throw new Error(`Incorrect arguments!`);
     if(typeof arguments[0] !== 'string' || typeof arguments[1] !== 'string') throw new Error(`Incorrect arguments!`);
-    message = message.toUpperCase().split("");
-    while (word.length < message.length) {
+    str = str.toUpperCase().split("");
+    while (word.length < str.length) {
       word += word;
     }
     word = word.toUpperCase().split("");
     let newStr = "";
     let index = 0;
 
-    for (let i = 0; i < message.length; i++) {
+    for (let i = 0; i < str.length; i++) {
       let numStr = String(str[i]);
 
       if (numStr.charCodeAt() >= 65 && numStr.charCodeAt() <= 90) {
@@ -96,3 +96,7 @@ const { NotImplementedError } = require('../extensions/index.js');
     }
   }
 }
+
+module.exports = {
+  VigenereCipheringMachine
+};
