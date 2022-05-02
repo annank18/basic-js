@@ -19,17 +19,80 @@ const { NotImplementedError } = require('../extensions/index.js');
  * reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse') => '!NWAD TA KCATTA'
  * 
  */
-class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+ class VigenereCipheringMachine {
+  constructor(directly = true) {
+    this.directly = directly;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  encrypt(message, word) {
+    if (arguments.length !== 2) throw new Error(`Incorrect arguments!`);
+    if(typeof arguments[0] !== 'string' || typeof arguments[1] !== 'string') throw new Error(`Incorrect arguments!`);
+    message = message.toUpperCase().split("");
+    while (word.length < message.length) {
+      word += word;
+    }
+    word = word.toUpperCase().split("");
+    let newStr = "";
+    let index = 0;
+    for (let i = 0; i < message.length; i++) {
+      let numStr = String(str[i]);
+
+      if (numStr.charCodeAt() >= 65 && numStr.charCodeAt() <= 90) {
+        numStr = numStr.charCodeAt() - 65;
+        let numWord = String(word[i - index]);
+        numWord = numWord.charCodeAt() - 65;
+        let newNum = 0;
+          if (numStr + numWord > 25)
+            {newNum = numStr + numWord - 26 + 65}
+            else { newNum = numStr + numWord + 65};
+        let newLetter = String.fromCharCode(newNum);
+        newStr += newLetter;
+      } else {
+        newStr += numStr;
+        index += 1;
+      }
+    }
+    if(this.directly){
+      return newStr;
+    } else {
+      return newStr.split('').reverse().join('')
+    }
+    
+  }
+  decrypt(message, word) {
+    if (arguments.length !== 2) throw new Error(`Incorrect arguments!`);
+    if(typeof arguments[0] !== 'string' || typeof arguments[1] !== 'string') throw new Error(`Incorrect arguments!`);
+    message = message.toUpperCase().split("");
+    while (word.length < message.length) {
+      word += word;
+    }
+    word = word.toUpperCase().split("");
+    let newStr = "";
+    let index = 0;
+
+    for (let i = 0; i < message.length; i++) {
+      let numStr = String(str[i]);
+
+      if (numStr.charCodeAt() >= 65 && numStr.charCodeAt() <= 90) {
+        numStr = numStr.charCodeAt() - 65;
+        let numWord = String(word[i - index]);
+        numWord = numWord.charCodeAt() - 65;
+        let newNum = 0
+        if (numStr - numWord < 0)
+            {newNum = 26 - (numWord - numStr) + 65}
+            else {newNum = numStr - numWord + 65};
+        let newLetter = String.fromCharCode(newNum);
+        newStr += newLetter;
+      } else {
+        newStr += numStr;
+        index += 1;
+      }
+    }
+    if(this.directly){
+      return newStr;
+    } else {
+      return newStr.split('').reverse().join('')
+    }
   }
 }
-
-module.exports = {
-  VigenereCipheringMachine
-};
